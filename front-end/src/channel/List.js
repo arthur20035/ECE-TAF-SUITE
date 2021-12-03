@@ -28,6 +28,8 @@ const useStyles = (theme) => ({
   root: {
     flex: "1 1 auto",
     overflow: "auto",
+    background: "#99A799",
+    borderRadius: "10px",
 
     "& ul": {
       padding: 0,

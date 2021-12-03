@@ -4,12 +4,15 @@ import { useTheme } from "@mui/styles";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import CreerCanalIcon from "@mui/icons-material/CreerCanal";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import InputAdornment from "@mui/material/InputAdornment";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import PasswordIcon from "@mui/icons-material/Password";
+import axios from "axios";
+
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 function CreerCanal({ onUser }) {
@@ -34,97 +37,82 @@ function CreerCanal({ onUser }) {
       },
     },
   });
+
+  const [nom, setNom] = useState("");
+  const history = useHistory();
+
+  const CreerCanal = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:3002/channels", {
+      nom: nom,
+    });
+    history.push("/");
+  };
+
   const styles = useStyles(useTheme());
   return (
     <div css={styles.root}>
       <div>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "56ch" },
-            width: 500,
-            height: 300,
-            backgroundColor: "black",
-            opacity: [0.5, 0.5, 0.5],
-            borderRadius: 5,
-            padding: 7,
-            "&:hover": {
+        <form onSubmit={CreerCanal}>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "56ch" },
+              width: 500,
+              height: 300,
               backgroundColor: "black",
               opacity: [0.5, 0.5, 0.5],
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <center>
-            <Avatar sx={{ width: 56, height: 56, marginBottom: 3 }}>
-              CreerCanal
-            </Avatar>
-          </center>
-
-          <TextField
-            id="nom"
-            name="nom"
-            label="Nom du canal"
-            variant="filled"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
+              borderRadius: 5,
+              padding: 7,
+              "&:hover": {
+                backgroundColor: "black",
+                opacity: [0.5, 0.5, 0.5],
+              },
             }}
-            placeholder="Entrer votre nom d'utilisateur..."
-            //helperText="Entrer un bon username"
-          />
-          <Divider sx={{ height: 30, m: 0.5 }} />
-          <div>
+            noValidate
+            autoComplete="off"
+          >
+            <center>
+              <Avatar sx={{ width: 56, height: 56, marginBottom: 3 }}>
+                CreerCanal
+              </Avatar>
+            </center>
+
             <TextField
-              label="Mot de passe"
-              type="password"
-              id="password"
-              size="small"
-              name="password"
+              id="nom"
+              name="nom"
+              label="Nom du canal"
               variant="filled"
-              margin="normal"
+              value={nom}
+              onChange={(e) => setNom(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PasswordIcon />
+                    <AccountCircle />
                   </InputAdornment>
                 ),
-                /* endAdornment: (
-                  <InputAdornment position="start">
-                    <PasswordIcon />
-                  </InputAdornment>
-                ), */
               }}
-              placeholder="Entrer votre mot de passe..."
-
-              //helperText="Entrer un bon mot de passe"
+              placeholder="Entrer le nom de votre canal..."
+              //helperText="Entrer un bon username"
             />
-          </div>
-          <Divider sx={{ height: 30, m: 0.5 }} />
+            <Divider sx={{ height: 30, m: 0.5 }} />
 
-          <div>
-            <center>
-              <Button
-                variant="contained"
-                size="large"
-                color="success"
-                centerRipple="true"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onUser({ username: "david" });
-                }}
-                /* onClick={() => window.open("/Channels")} */
-                endIcon={<CreerCanalIcon />}
-              >
-                CreerCanal
-              </Button>
-            </center>
-          </div>
-        </Box>
+            <div>
+              <center>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="success"
+                  centerRipple="true"
+                  /* onClick={() => window.open("/Channels")} */
+                  endIcon={<AddBoxIcon />}
+                >
+                  CreerCanal
+                </Button>
+              </center>
+            </div>
+          </Box>
+        </form>
       </div>
     </div>
   );

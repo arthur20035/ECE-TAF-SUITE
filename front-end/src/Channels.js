@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 // Layout
 import { List } from "@mui/material";
@@ -33,9 +33,8 @@ const styles = {
     background: "black",
   },
   reductionListe: {
-    padding: "50px",
     position: "relative",
-    top: "0px",
+    top: "10%",
   },
 };
 
@@ -47,19 +46,10 @@ export default function Channels({ onChannel }) {
         "http://localhost:3002/channels"
       );
       setChannels(channels);
-      if (listRef.current) {
-        listRef.current.scroll();
-      }
     };
     fetch();
   }, []);
 
-  const listRef = useRef();
-  const [scrollDown, setScrollDown] = useState(false);
-
-  const onScrollDown = (scrollDown) => {
-    setScrollDown(scrollDown);
-  };
   return (
     <Grid
       direction="row"
@@ -68,11 +58,7 @@ export default function Channels({ onChannel }) {
       spacing={1}
       css={styles.reductionListe}
     >
-      <List
-        sx={{ width: "100%", maxWidth: 300, bgcolor: "background.paper" }}
-        onScrollDown={onScrollDown}
-        ref={listRef}
-      >
+      <List sx={{ width: "100%", maxWidth: 300, bgcolor: "background.paper" }}>
         {channels.map((channel, i) => (
           <ListItem alignItems="flex-start" css={styles.root} key={i}>
             <ListItemAvatar>

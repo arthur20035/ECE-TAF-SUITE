@@ -12,7 +12,7 @@ const useStyles = (theme) => {
   return {
     form: {
       borderTop: `2px solid ${borderColor}`,
-      marginLeft: "10px",
+      marginLeft: "0px",
       display: "flex",
     },
     content: {
